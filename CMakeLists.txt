@@ -93,9 +93,9 @@ add_executable(mobile_out_gen src/mobile_out_gen.cpp)
 target_link_libraries(mobile_out_gen ${catkin_LIBRARIES})
 
 
-add_dependencies(listener beginner_tutorials_generate_messages_cpp)
-add_dependencies(keyboard beginner_tutorials_generate_messages_cpp)
-add_dependencies(mobile_out_gen beginner_tutorials_generate_messages_cpp)
+add_dependencies(listener pc_side_programs_generate_messages_cpp)
+add_dependencies(keyboard pc_side_programs_generate_messages_cpp)
+add_dependencies(mobile_out_gen pc_side_programs_generate_messages_cpp)
 add_definitions(-std=c++11)
 
 #追加箇所　service client
@@ -132,9 +132,9 @@ include_directories(/usr/local/include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_D
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
+  #INCLUDE_DIRS include
   LIBRARIES pc_side_programs
-  CATKIN_DEPENDS roscpp rospy
+  CATKIN_DEPENDS roscpp rospy message_runtime
   DEPENDS system_lib
 )
 

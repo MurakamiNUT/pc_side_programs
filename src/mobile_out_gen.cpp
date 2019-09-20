@@ -1,13 +1,13 @@
 #include <ros/ros.h>
-#include <beginner_tutorials/Controller.h>
-#include <beginner_tutorials/Motor.h>
+#include <pc_side_programs/Controller.h>
+#include <pc_side_programs/Motor.h>
 #include "std_msgs/Int32.h"
 /*
 #include "std_msgs/MultiArrayLayout.h"
 #include "std_msgs/MultiArrayDimension.h"
 #include <std_msgs/Int32MultiArray.h>
 */
-beginner_tutorials::Motor msg;
+pc_side_programs::Motor msg;
 
 
 bool CLAWLER_MODE = true;
@@ -50,7 +50,7 @@ float Left_C_Vel;
 float Right_C_Vel_T;
 float Left_C_Vel_T;
 
-void messageCb( const beginner_tutorials::Controller& controller_) {
+void messageCb( const pc_side_programs::Controller& controller_) {
     
  // ROS_INFO("data:[%d]", 1);
   if(controller_.L3 == true) CLAWLER_MODE = true;
@@ -220,7 +220,7 @@ int main(int argc, char **argv){
     ros::NodeHandle nh;
     ros::Subscriber sub = nh.subscribe("Arduino", 1000, messageCb);
     ros::Subscriber sub_key = nh.subscribe("key", 1000, chatterCallback_key);
-    ros::Publisher pub = nh.advertise<beginner_tutorials::Motor>("Motor_Con", 1000);
+    ros::Publisher pub = nh.advertise<pc_side_programs::Motor>("Motor_Con", 1000);
     ros::Rate loop_rate(10);
     //msg.data.clear();
 

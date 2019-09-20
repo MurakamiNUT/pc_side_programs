@@ -1,8 +1,9 @@
 <launch>
-    <node pkg="beginner_tutorials" name="listener" type="listener">
+    <node pkg="pc_side_programs" name="listener" type="listener">
     <param name="cont" type="string" value="logicool"/>//ps2 or logicool
     </node>
     <node pkg="joy" name="joy_node" type="joy_node"/>
-    <node pkg="beginner_tutorials" name="keyboard" type="keyboard"/>
-    <node pkg="beginner_tutorials" name="arduino" type="arduino"/>
+    <node pkg="pc_side_programs" name="keyboard" type="keyboard"/>
+    <node pkg="pc_side_programs" name="mobile_out_gen" type="mobile_out_gen"/>
+    <node pkg="robot_side_programs" name="dynamixel_ik" type="dynamixel_ik" output="screen"/>
 </launch>

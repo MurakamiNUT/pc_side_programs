@@ -30,8 +30,8 @@
 #include "std_msgs/String.h"
 #include "sensor_msgs/Joy.h"
 #include "geometry_msgs/Twist.h"
-#include "beginner_tutorials/Controller.h"
-std::string msg_chatter = "ps2";
+#include "pc_side_programs/Controller.h"
+std::string msg_chatter = "logicool";
 /*
 float LS_Left_Right_axis;
 float LS_Up_Down_axis;
@@ -61,7 +61,7 @@ struct {
   bool Start;
 }Controller;
 */
-  beginner_tutorials::Controller controller_;
+  pc_side_programs::Controller controller_;
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
  */
@@ -135,7 +135,7 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
   ros::NodeHandle pn("~");
   ros::Subscriber sub = n.subscribe("joy", 1000, chatterCallback);
-  ros::Publisher Controller_pub = n.advertise<beginner_tutorials::Controller>("Arduino", 1000);
+  ros::Publisher Controller_pub = n.advertise<pc_side_programs::Controller>("Arduino", 1000);
   pn.getParam("cont",msg_chatter);
   ros::Rate loop_rate(10);
 
