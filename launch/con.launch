@@ -4,6 +4,4 @@
     </node>
     <node pkg="joy" name="joy_node" type="joy_node"/>
     <node pkg="pc_side_programs" name="keyboard" type="keyboard"/>
-    <node pkg="pc_side_programs" name="mobile_out_gen" type="mobile_out_gen"/>
-    <node pkg="robot_side_programs" name="dynamixel_ik" type="dynamixel_ik" output="screen"/>
 </launch>
