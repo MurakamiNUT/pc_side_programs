@@ -202,31 +202,31 @@ void messageCb( const pc_side_programs::Controller& controller_) {
   //msg.data.push_back(motor_speed);
 }
 
-void chatterCallback_key(const std_msgs::Int32& msg){
-  key = msg.data;
-  ROS_INFO("data:[%d]", key);
-  const char *log;
-  switch(key){
-    case 111:
-      emerge = true;
-    break;
-    case 112:
-      emerge = false;
-    break;
-  }
-}
+// void chatterCallback_key(const std_msgs::Int32& msg){
+//   key = msg.data;
+//   ROS_INFO("data:[%d]", key);
+//   const char *log;
+//   switch(key){
+//     case 111:
+//       emerge = true;
+//     break;
+//     case 112:
+//       emerge = false;
+//     break;
+//   }
+// }
 int main(int argc, char **argv){
     ros::init(argc, argv, "arduino");    
     ros::NodeHandle nh;
     ros::Subscriber sub = nh.subscribe("Arduino", 1000, messageCb);
-    ros::Subscriber sub_key = nh.subscribe("key", 1000, chatterCallback_key);
+    // ros::Subscriber sub_key = nh.subscribe("key", 1000, chatterCallback_key);
     ros::Publisher pub = nh.advertise<pc_side_programs::Motor>("Motor_Con", 1000);
-    ros::Rate loop_rate(10);
+    // ros::Rate loop_rate(10);
     //msg.data.clear();
 
     while(ros::ok()){
         pub.publish(msg);
         ros::spinOnce();//spinはアイドルループかも?
-        loop_rate.sleep();
+        // loop_rate.sleep();
     }
 }

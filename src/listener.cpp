@@ -32,35 +32,6 @@
 #include "geometry_msgs/Twist.h"
 #include "pc_side_programs/Controller.h"
 std::string msg_chatter = "logicool";
-/*
-float LS_Left_Right_axis;
-float LS_Up_Down_axis;
-float RS_Left_Right_axis;
-float RS_Up_Down_axis;
-float Left_Right_cross;
-float Up_Down_cross
-*/
-/*
-struct {
-  float LS_Left_Right;
-  float LS_Up_Down;
-  float RS_Left_Right;
-  float RS_Up_Down;
-  float Left_Right;
-  float Up_Down;
-
-  bool Triangle;
-  bool Circle;
-  bool Square;
-  bool Cross;
-  bool R1;
-  bool R2;
-  bool L1;
-  bool L2;
-  bool Select;
-  bool Start;
-}Controller;
-*/
   pc_side_programs::Controller controller_;
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
@@ -118,13 +89,13 @@ void chatterCallback(const sensor_msgs::Joy& msg)
 
   //ROS_INFO("===========================================");
   
-  for(int i = 0; i <= 5; i++){
-    //ROS_INFO("data:[%f]", msg.axes[i]);
-  }
+  // for(int i = 0; i <= 5; i++){
+  //   //ROS_INFO("data:[%f]", msg.axes[i]);
+  // }
   
-  for(int j = 0; j <= 9; j++){
-   // ROS_INFO("data:[%d]", msg.buttons[j]);
-  }
+  // for(int j = 0; j <= 9; j++){
+  //  // ROS_INFO("data:[%d]", msg.buttons[j]);
+  // }
   
 }
 // %EndTag(CALLBACK)%
@@ -137,13 +108,13 @@ int main(int argc, char **argv)
   ros::Subscriber sub = n.subscribe("joy", 1000, chatterCallback);
   ros::Publisher Controller_pub = n.advertise<pc_side_programs::Controller>("Arduino", 1000);
   pn.getParam("cont",msg_chatter);
-  ros::Rate loop_rate(10);
+  // ros::Rate loop_rate(10);
 
 #define SPEED_TEST 100
 while(ros::ok()){
   Controller_pub.publish(controller_);
   ros::spinOnce();//spinはアイドルループかも?
-  loop_rate.sleep();
+  // loop_rate.sleep();
 }
 }
 // %EndTag(FULLTEXT)%
