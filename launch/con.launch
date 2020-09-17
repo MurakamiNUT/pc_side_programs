@@ -1,6 +1,6 @@
 <launch>
     <node pkg="pc_side_programs" name="listener" type="listener">
-    <param name="cont" type="string" value="ps2"/>//ps2 or logicool
+    <param name="cont" type="string" value="multi"/>//ps2 or logicool
     </node>
     <node pkg="joy" name="joy_node" type="joy_node"/>
     <node pkg="pc_side_programs" name="keyboard" type="keyboard"/>

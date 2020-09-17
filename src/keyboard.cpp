@@ -29,7 +29,7 @@ int main(int argc, char **argv){
   ros::init(argc, argv, "keyboard");
   ros::NodeHandle n;
   ros::Publisher Controller_pub = n.advertise<std_msgs::Int32>("key", 1000);
-  //ros::Rate loop_rate(10);
+  ros::Rate loop_rate(10);
 while(ros::ok()){
     int32_t key;
     key = getch();
@@ -37,6 +37,6 @@ while(ros::ok()){
     ROS_INFO("data:[%d]",msg.data);
     Controller_pub.publish(msg);
     ros::spinOnce();
-    //loop_rate.sleep();
+    loop_rate.sleep();
 }
 }
