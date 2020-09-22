@@ -32,6 +32,7 @@ bool emerge = false;
 #define FLIP_REAR_LEFT_ID 3//R
 #define CRAWLER_RIGHT_ID 4//FR/FL
 #define CRAWLER_LEFT_ID 5//FL/FR
+#define PI 3.1415923
 
 struct FLIP{
     bool Front_Right;
@@ -49,7 +50,7 @@ float Left_C_Vel;
 //目標値
 float Right_C_Vel_T;
 float Left_C_Vel_T;
-
+float a_process_range = 5. / 180. * PI;
 void messageCb( const pc_side_programs::Controller& controller_) {
     
  // ROS_INFO("data:[%d]", 1);
@@ -63,8 +64,51 @@ void messageCb( const pc_side_programs::Controller& controller_) {
         float deg; 
         //不感帯
         if((fabs(controller_.LS_Up_Down) > 0.01) || (fabs(controller_.LS_Left_Right) > 0.01)){
-          Right_C_Vel_T = sin(radian - (3.141592/4)) * SPEED_TEST * value * 1.4142;
-          Left_C_Vel_T  = sin(radian + (3.141592/4)) * SPEED_TEST * value * 1.4142;
+          // Right_C_Vel_T = sin(radian - (3.141592/4)) * SPEED_TEST * value * 1.4142;
+          // Left_C_Vel_T  = sin(radian + (3.141592/4)) * SPEED_TEST * value * 1.4142;
+          Right_C_Vel_T = sin(radian) * SPEED_TEST;// * value;// * 1.4142;
+          Left_C_Vel_T  = sin(radian) * SPEED_TEST;// * value;// * 1.4142;
+          if((0 <radian) && (radian < (PI/2))){
+            Left_C_Vel_T = SPEED_TEST;
+          }  
+          else if(((PI/2) <radian) && (radian < (PI))){
+            Right_C_Vel_T = SPEED_TEST;
+          }  
+          else if(((-PI) <radian) && (radian < (-PI/2))){
+            Left_C_Vel_T = -SPEED_TEST;
+          }  
+          else if(((-PI/2) <radian) && (radian < (0))){
+            Right_C_Vel_T = -SPEED_TEST;
+          }  
+          else{}
+          //別処理ゾーン
+          if(((0 - a_process_range) <= radian) && (radian <= (0 + a_process_range))){
+            Right_C_Vel_T = -SPEED_TEST;
+            Left_C_Vel_T  =  SPEED_TEST;
+            ROS_INFO("1");
+          }
+          else if((((PI/2) - a_process_range) <= radian) && (radian <= ((PI/2) + a_process_range))){
+            Right_C_Vel_T =  SPEED_TEST;
+            Left_C_Vel_T  =  SPEED_TEST;
+            ROS_INFO("2");
+          }
+          else if(((((PI) - a_process_range) <= radian) && (radian <= ((PI)) + a_process_range)) 
+              || ((((-PI) - a_process_range) <= radian) && (radian <= ((-PI) + a_process_range)))){
+            Right_C_Vel_T =  SPEED_TEST;
+            Left_C_Vel_T  = -SPEED_TEST;
+            ROS_INFO("3");
+          }
+          // else if(((-PI) <= radian) && (radian <= ((-PI) + a_process_range))){
+          //   ROS_INFO("3");
+          // } 
+          else if((((-PI/2) - a_process_range) <= radian) && (radian <= ((-PI/2) + a_process_range))){
+            Right_C_Vel_T = -SPEED_TEST;
+            Left_C_Vel_T  = -SPEED_TEST;
+            ROS_INFO("4");
+          }
+          ROS_INFO("Right_C_VEL_T:%f",Right_C_Vel_T);
+          ROS_INFO("Left_C_VEL_T :%f",Left_C_Vel_T);
+          ROS_INFO("radian::%f",radian);
         }
         else{
           Right_C_Vel_T = 0;
@@ -221,12 +265,14 @@ int main(int argc, char **argv){
     ros::Subscriber sub = nh.subscribe("Arduino", 1000, messageCb);
     // ros::Subscriber sub_key = nh.subscribe("key", 1000, chatterCallback_key);
     ros::Publisher pub = nh.advertise<pc_side_programs::Motor>("Motor_Con", 1000);
-    // ros::Rate loop_rate(10);
+    ros::Rate loop_rate(10);
+    ros::AsyncSpinner spinner(1);  //spinを処理するスレッド数を引数に渡す
+    spinner.start();
     //msg.data.clear();
 
     while(ros::ok()){
         pub.publish(msg);
-        ros::spinOnce();//spinはアイドルループかも?
-        // loop_rate.sleep();
+        // ros::spinOnce();//spinはアイドルループかも?
+        loop_rate.sleep();
     }
 }

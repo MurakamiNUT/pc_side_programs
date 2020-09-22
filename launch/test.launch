@@ -1,9 +1,9 @@
 <launch>
     <node pkg="pc_side_programs" name="listener" type="listener">
-    <param name="cont" type="string" value="ps2"/>//ps2 or logicool
+    <param name="cont" type="string" value="multi"/>//ps2 or logicool
     </node>
     <node pkg="joy" name="joy_node" type="joy_node"/>
     <node pkg="pc_side_programs" name="keyboard" type="keyboard"/>
-    <node pkg="pc_side_programs" name="mobile_out_gen" type="mobile_out_gen"/>
+    <node pkg="pc_side_programs" name="mobile_out_gen" type="mobile_out_gen" output="screen"/>
     <node pkg="robot_side_programs" name="dynamixel_ik" type="dynamixel_ik" output="screen"/>
 </launch>
