@@ -133,8 +133,8 @@ include_directories(/usr/local/include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_D
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   #INCLUDE_DIRS include
-  LIBRARIES pc_side_programs
-  CATKIN_DEPENDS roscpp rospy message_runtime
+  #LIBRARIES pc_side_programs
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
   DEPENDS system_lib
 )
 
